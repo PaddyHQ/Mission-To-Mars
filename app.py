@@ -1,5 +1,5 @@
-from Flask import Flask, render_template, redirect, url_for
-from Flask_PyMongo import PyMongo
+from flask import Flask, render_template, redirect, url_for
+from flask_pymongo import PyMongo
 import Scraping
 
 app = Flask(__name__)
