@@ -5,7 +5,6 @@ import pandas as pd
 import datetime as dt
 from webdriver_manager.chrome import ChromeDriverManager
 
-
 def scrape_all():
     # Initiate headless driver for deployment
     executable_path = {'executable_path': ChromeDriverManager().install()}
@@ -19,13 +18,13 @@ def scrape_all():
         "news_paragraph": news_paragraph,
         "featured_image": featured_image(browser),
         "facts": mars_facts(),
-        "last_modified": dt.datetime.now()
+        "last_modified": dt.datetime.now(),
+        "high res image": hemisphere_image_urls,
     }
 
     # Stop webdriver and return data
     browser.quit()
     return data
-
 
 def mars_news(browser):
 
@@ -41,6 +40,7 @@ def mars_news(browser):
     html = browser.html
     news_soup = soup(html, 'html.parser')
 
+
     # Add try/except for error handling
     try:
         slide_elem = news_soup.select_one('div.list_text')
@@ -53,7 +53,6 @@ def mars_news(browser):
         return None, None
 
     return news_title, news_p
-
 
 def featured_image(browser):
     # Visit URL
@@ -96,6 +95,27 @@ def mars_facts():
 
     # Convert dataframe into HTML format, add bootstrap
     return df.to_html(classes="table table-striped")
+
+hemisphere_image_urls=[]
+def hemisphere_photos():
+    for link in range(4):
+        #make dict
+        hemispheres={}
+        hemisphere_image_urls=[]
+        #find and click thumb
+        thumbnail = Browser.find_by_tag('img.thumb')[link]
+        thumbnail.click()
+        #pull image url and store
+        sample_img = Browser.find_by_text("Sample")
+        img_url= sample_img['href']
+        hemispheres['img_url']=img_url
+        #get img title and store
+        img_title=Browser.find_by_tag('h2').text
+        hemispheres['title']= img_title
+        #add hemispheres to array outside loop
+        hemisphere_image_urls.append(hemispheres)
+        #navigate back to go to next page
+        Browser.back()
 
 if __name__ == "__main__":
 
