@@ -20,7 +20,7 @@ def scrape_all():
         "featured_image": featured_image(browser),
         "facts": mars_facts(),
         "last_modified": dt.datetime.now(),
-        'hemispheres': hemisphere_photos(browser),
+        'hempispheres': hemisphere_photos(browser),
     }
 
     # Stop webdriver and return data
@@ -71,8 +71,9 @@ def featured_image(browser):
         # Find the relative image url
         img_url_rel = img_soup.find('img', class_='fancybox-image').get('src')
     except AttributeError:
-        print('Yuck')
+        print('I fucked up')
         return None
+
     # Use the base url to create an absolute url
     img_url = f'https://data-class-jpl-space.s3.amazonaws.com/JPL_Space/{img_url_rel}'
     return img_url
