@@ -73,7 +73,6 @@ def featured_image(browser):
     except AttributeError:
         print('Yuck')
         return None
-
     # Use the base url to create an absolute url
     img_url = f'https://data-class-jpl-space.s3.amazonaws.com/JPL_Space/{img_url_rel}'
     return img_url
@@ -91,7 +90,7 @@ def mars_facts():
     df.columns = ['Description', 'Mars', 'Earth']
     df.set_index('Description', inplace=True)
     # Convert dataframe into HTML format, add bootstrap
-    return df.to_html(classes="table table-striped")
+    return df.to_html(classes="table table-hover table-warning")
 
 def hemisphere_photos(browser):
     # 1. Use browser to visit the URL
